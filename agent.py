@@ -31,51 +31,31 @@ async def entrypoint(ctx: JobContext):
     # ===============================
     metadata = {}
     try:
-        logger.info(f"Raw Metadata: {ctx.job.metadata}")
-        logger.info(f"Metadata Type: {type(ctx.job.metadata)}")
+        # Log the raw metadata received
+        logger.info(f"=== Step 2: Raw Metadata Received === {ctx.job.metadata}")
 
-        # Check if metadata is a string and attempt to parse
-        if isinstance(ctx.job.metadata, str):
+        # Check if metadata is a non-empty string before parsing
+        if ctx.job.metadata and isinstance(ctx.job.metadata, str):
+            logger.info(f"Metadata Type: {type(ctx.job.metadata)} | Raw: {ctx.job.metadata}")
             metadata = json.loads(ctx.job.metadata)
         else:
-            logger.warning("Metadata is not a string. Attempting to stringify and parse.")
-            metadata = json.loads(json.dumps(ctx.job.metadata))
-
-        logger.info(f"Parsed Metadata: {json.dumps(metadata, indent=4)}")
-    except json.JSONDecodeError as json_err:
+            logger.warning(f"No metadata received or wrong type: {ctx.job.metadata}")
+    except json.JSONDecodeError as e:
         logger.error("JSON Decode Error:", exc_info=True)
     except Exception as e:
-        logger.error("Unexpected Error parsing job metadata", exc_info=True)
+        logger.error("Unexpected error while parsing metadata", exc_info=True)
 
+    logger.info(f"=== Step 3: Parsed Metadata === {json.dumps(metadata, indent=4)}")
 
-    # ===============================
-    # 3. Extract agentName with Multiple Checks
-    # ===============================
-    # Check for agentName in multiple ways to ensure we're not missing it
- # Standard Extraction
+        # ===============================
+        # 3. Extract agentName with Multiple Checks
+        # ===============================
     agent_name = (
         metadata.get("agentName") or
         metadata.get("agent_name") or
         "default-agent"
     )
-
-    # Additional Checks for Potential Edge Cases
-    if isinstance(metadata, dict):
-        # Check if agentName is nested
-        if "data" in metadata and "agentName" in metadata["data"]:
-            agent_name = metadata["data"]["agentName"]
-            logger.info("Extracted agentName from nested structure.")
-        
-        # Check for alternative capitalizations
-        if "AgentName" in metadata:
-            agent_name = metadata["AgentName"]
-            logger.info("Extracted agentName from alternative capitalization.")
-
-    logger.info(f"Final extracted agentName: {agent_name} | Full Metadata Context: {json.dumps(metadata, indent=4)} | Raw: {ctx.job.metadata}")
-
-    # Fallback warning if agentName is missing
-    if agent_name == "default-agent":
-        logger.warning("No agentName found in metadata. Using default-agent.")
+    logger.info(f"Final extracted agentName: {agent_name} | Full Metadata Context: {json.dumps(metadata)} | Raw: {ctx.job.metadata}")
 
     # ===============================
     # 4. Greeting Messages Based on Agent Name
