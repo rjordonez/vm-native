@@ -21,19 +21,39 @@ def prewarm(proc: JobProcess):
 
 
 async def entrypoint(ctx: JobContext):
-    # Parse job metadata (if provided)
+    # ===============================
+    # 1. Log Raw Metadata (Unprocessed)
+    # ===============================
+    logger.info(f"Raw Metadata: {ctx.job.metadata}")
+
+    # ===============================
+    # 2. Parse Metadata and Log Details
+    # ===============================
     metadata = {}
     try:
         metadata = json.loads(ctx.job.metadata or "{}")
-        logger.info(f"Received Metadata: {metadata}")
+        logger.info(f"Parsed Metadata: {json.dumps(metadata, indent=4)}")
     except Exception as e:
         logger.error("Error parsing job metadata", exc_info=True)
 
-    # Extract agentName from metadata
-    agent_name = metadata.get("agentName", "default-agent")
+    # ===============================
+    # 3. Extract agentName with Multiple Checks
+    # ===============================
+    # Check for agentName in multiple ways to ensure we're not missing it
+    agent_name = (
+        metadata.get("agentName") or
+        metadata.get("agent_name") or
+        "default-agent"
+    )
     logger.info(f"Selected agent: {agent_name}")
 
-    # Define different greeting messages based on the chosen agent.
+    # Fallback warning if agentName is missing
+    if agent_name == "default-agent":
+        logger.warning("No agentName found in metadata. Using default-agent.")
+
+    # ===============================
+    # 4. Greeting Messages Based on Agent Name
+    # ===============================
     if agent_name == "onboarding-agent":
         greeting = "Welcome! Let's begin your onboarding conversation."
     elif agent_name == "networking-agent":
@@ -45,7 +65,9 @@ async def entrypoint(ctx: JobContext):
     else:
         greeting = "Hi! Are you ready to start the conversation?"
 
-    # Build the initial conversation context.
+    # ===============================
+    # 5. Initial Conversation Context
+    # ===============================
     initial_ctx = llm.ChatContext().append(
         role="system",
         text=(
@@ -76,7 +98,9 @@ async def entrypoint(ctx: JobContext):
     logger.info(f"Connecting to room {ctx.room.name}")
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
 
-    # Wait for the first participant to connect
+    # ===============================
+    # 6. Wait for Participant and Start Voice Assistant
+    # ===============================
     participant = await ctx.wait_for_participant()
     logger.info(f"Starting voice assistant for participant {participant.identity}")
 
@@ -91,7 +115,9 @@ async def entrypoint(ctx: JobContext):
 
     assistant.start(ctx.room, participant)
 
-    # Send the greeting based on the agent type.
+    # ===============================
+    # 7. Send the Greeting
+    # ===============================
     await assistant.say(greeting, allow_interruptions=False)
 
 
