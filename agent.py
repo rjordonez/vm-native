@@ -113,7 +113,7 @@ async def entrypoint(ctx: JobContext):
     # Get all participants in the room
     participant = await ctx.wait_for_participant()
 
-    agent_name = (ctx.room.local_participant.identity if 'agent' in ctx.room.local_participant.metadata else
+    agent_name = (ctx.room.local_participant.identity if 'ielts' in ctx.room.local_participant.metadata else
               next((p.identity for p in ctx.room.remote_participants.values() if 'agent' in p.metadata), 'No agent found'))
 
     logger.info(f"Agent Name: {agent_name}")
