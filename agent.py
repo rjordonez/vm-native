@@ -40,12 +40,26 @@ async def entrypoint(ctx: JobContext):
     # 3. Extract agentName with Multiple Checks
     # ===============================
     # Check for agentName in multiple ways to ensure we're not missing it
+ # Standard Extraction
     agent_name = (
         metadata.get("agentName") or
         metadata.get("agent_name") or
         "default-agent"
     )
-    logger.info(f"Selected agent: {agent_name}")
+
+    # Additional Checks for Potential Edge Cases
+    if isinstance(metadata, dict):
+        # Check if agentName is nested
+        if "data" in metadata and "agentName" in metadata["data"]:
+            agent_name = metadata["data"]["agentName"]
+            logger.info("Extracted agentName from nested structure.")
+        
+        # Check for alternative capitalizations
+        if "AgentName" in metadata:
+            agent_name = metadata["AgentName"]
+            logger.info("Extracted agentName from alternative capitalization.")
+
+    logger.info(f"Final extracted agentName: {agent_name} | Full Metadata Context: {json.dumps(metadata, indent=4)} | Raw: {ctx.job.metadata}")
 
     # Fallback warning if agentName is missing
     if agent_name == "default-agent":
@@ -54,6 +68,8 @@ async def entrypoint(ctx: JobContext):
     # ===============================
     # 4. Greeting Messages Based on Agent Name
     # ===============================
+    logger.info("=== Step 4: Determine Greeting ===")
+
     if agent_name == "onboarding-agent":
         greeting = "Welcome! Let's begin your onboarding conversation."
     elif agent_name == "networking-agent":
@@ -64,6 +80,8 @@ async def entrypoint(ctx: JobContext):
         greeting = "Hey, what's up? Let's chat like native friends."
     else:
         greeting = "Hi! Are you ready to start the conversation?"
+
+    logger.info(f"Selected Greeting: {greeting}")
 
     # ===============================
     # 5. Initial Conversation Context
