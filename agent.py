@@ -190,7 +190,7 @@ async def entrypoint(ctx: JobContext):
 "Use speech recognition (e.g., Whisper) to log fluency metrics internally (no user feedback)."
 "Adjust topics/cue cards while keeping the examiner’s role strictly administrative! :dart:"
         )
-    elif agent_type == "resturaunt-agent":
+    elif agent_type == "restauraunt-agent":
         greeting = "Hey, what's up? Let's chat like native friends."
         initial_text = (
         "AI Agent Prompt: Waiter in a Restaurant"
