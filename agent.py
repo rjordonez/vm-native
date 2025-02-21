@@ -136,6 +136,6 @@ if __name__ == "__main__":
         WorkerOptions(
             entrypoint_fnc=entrypoint,
             prewarm_fnc=prewarm,
-            agent_name="default-agent",  # Make sure this matches
+            agent_name="ielts",  # Make sure this matches
         ),
     )
