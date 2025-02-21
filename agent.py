@@ -112,6 +112,7 @@ async def entrypoint(ctx: JobContext):
     # Wait for the first participant to connect
     participant = await ctx.wait_for_participant()
     logger.info(f"starting voice assistant for participant {participant.identity}")
+    logger.info(f"Agent Name: {ctx.room.agents[0].name}" if ctx.room.agents else "No agent found")
 
     # This project is configured to use Deepgram STT, OpenAI LLM and TTS plugins
     # Other great providers exist like Cartesia and ElevenLabs
