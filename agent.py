@@ -1,8 +1,6 @@
 import logging
 import asyncio
 
-logger.info(f"Agent Name: {agent_name}")
-
 from dotenv import load_dotenv
 from livekit.agents import (
     AutoSubscribe,
