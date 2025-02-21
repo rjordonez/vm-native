@@ -105,8 +105,6 @@ async def entrypoint(ctx: JobContext):
     )
 
     logger.info(f"connecting to room {ctx.room.name}")
-    logger.info(f"Room Metadata: {ctx.room.metadata}")
-
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
 
     # Wait for the first participant to connect
@@ -136,6 +134,5 @@ if __name__ == "__main__":
         WorkerOptions(
             entrypoint_fnc=entrypoint,
             prewarm_fnc=prewarm,
-            agent_name="ielts",  # Make sure this matches
         ),
     )
