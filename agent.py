@@ -111,13 +111,8 @@ async def entrypoint(ctx: JobContext):
 
     # Wait for the first participant to connect
     # Get all participants in the room
-    participants = ctx.room.participants
-
-    # Iterate over participants to find the agent
-    agent_name = next(
-        (p.identity for p in participants if hasattr(p, 'kind') and p.kind() == "AGENT"),
-        'No agent found'
-    )
+    agent_name = (ctx.room.local_participant.identity if 'agent' in ctx.room.local_participant.metadata else
+              next((p.identity for p in ctx.room.remote_participants.values() if 'agent' in p.metadata), 'No agent found'))
 
     logger.info(f"Agent Name: {agent_name}")
 
