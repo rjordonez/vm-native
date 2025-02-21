@@ -1,4 +1,7 @@
 import logging
+import asyncio
+
+logger.info(f"Agent Name: {agent_name}")
 
 from dotenv import load_dotenv
 from livekit.agents import (
@@ -112,9 +115,27 @@ async def entrypoint(ctx: JobContext):
     # Wait for the first participant to connect
     # Get all participants in the room
     participant = await ctx.wait_for_participant()
-    logger.info("hi my name is ", ctx.room.local_participant.identity)
-    agent_name = (ctx.room.local_participant.identity if 'ielts' in ctx.room.local_participant.metadata else
-              next((p.identity for p in ctx.room.remote_participants.values() if 'agent' in p.metadata), 'No agent found'))
+    logger.info(f"First Participant Connected: {participant.identity}")
+
+    # Wait for 1 second to allow all participants (including the agent) to join
+    await asyncio.sleep(1)
+
+    # Check both local and remote participants
+    local_identity = ctx.room.local_participant.identity
+    remote_identities = [p.identity for p in ctx.room.remote_participants.values()]
+
+    logger.info(f"Local Participant Identity: {local_identity}")
+    logger.info(f"Remote Participants: {remote_identities}")
+
+    # Check if the local participant is the agent
+    if 'ielts' in ctx.room.local_participant.identity:
+        agent_name = ctx.room.local_participant.identity
+    else:
+        # Check remote participants for the agent
+        agent_name = next(
+            (p.identity for p in ctx.room.remote_participants.values() if 'ielts' in p.identity), 
+            'No agent found'
+        )
 
     logger.info(f"Agent Name: {agent_name}")
 
