@@ -25,23 +25,12 @@ async def entrypoint(ctx: JobContext):
     metadata = {}
     try:
         metadata = json.loads(ctx.job.metadata or "{}")
+        logger.info(f"Received Metadata: {metadata}")
     except Exception as e:
         logger.error("Error parsing job metadata", exc_info=True)
 
-    # Determine agent name
-    if metadata.get("onboarding") is True:
-        agent_name = "onboarding-agent"
-    else:
-        scenario_id = metadata.get("scenarioId", 0)
-        if scenario_id == 1:
-            agent_name = "networking-agent"
-        elif scenario_id == 2:
-            agent_name = "ielts-agent"
-        elif scenario_id == 3:
-            agent_name = "native-friend-agent"
-        else:
-            agent_name = "default-agent"
-
+    # Extract agentName from metadata
+    agent_name = metadata.get("agentName", "default-agent")
     logger.info(f"Selected agent: {agent_name}")
 
     # Define different greeting messages based on the chosen agent.
@@ -78,10 +67,6 @@ async def entrypoint(ctx: JobContext):
             "  - Highlight something from the event or Luna's speech\n"
             "  - Find common ground\n"
             "  - End the conversation nicely\n\n"
-            "### Additional Guidelines:\n"
-            "• **Tone and Punctuation:** Maintain a friendly, supportive, and patient demeanor. Avoid complex or unpronounceable punctuation.\n"
-            "• **Flexibility:** Adapt to the user's preferences, whether they seek active speaking practice or prefer listening and comprehension exercises.\n"
-            "• **Encouragement:** Emphasize regular practice and continuous improvement. Encourage users to return for further sessions and outline how future interactions can support their learning journey.\n\n"
             "### Important:\n"
             "Ask the user if they are ready to start. Only begin the scenario if they confirm. "
             "Once the scenario begins, all conversation must stay within the context of the scenario."
