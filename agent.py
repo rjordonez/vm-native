@@ -110,8 +110,15 @@ async def entrypoint(ctx: JobContext):
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
 
     # Wait for the first participant to connect
-    participants = await ctx.room.get_participants()
-    agent_name = next((p.identity for p in participants if p.kind() == proto_participant.ParticipantKind.AGENT), 'No agent found')
+    # Get all participants in the room
+    participants = ctx.room.participants
+
+    # Iterate over participants to find the agent
+    agent_name = next(
+        (p.identity for p in participants if hasattr(p, 'kind') and p.kind() == "AGENT"),
+        'No agent found'
+    )
+
     logger.info(f"Agent Name: {agent_name}")
 
     # This project is configured to use Deepgram STT, OpenAI LLM and TTS plugins
