@@ -21,47 +21,32 @@ def prewarm(proc: JobProcess):
 
 
 async def entrypoint(ctx: JobContext):
-    # ===============================
-    # 1. Log Raw Metadata (Unprocessed)
-    # ===============================
+    # --- Step 1: Log the raw metadata ---
     logger.info(f"Raw Metadata: {ctx.job.metadata}")
-
-    # ===============================
-    # 2. Parse Metadata and Log Details
-    # ===============================
+    
+    # --- Step 2: Parse metadata if possible ---
     metadata = {}
     try:
-        # Log the raw metadata received
-        logger.info(f"=== Step 2: Raw Metadata Received === {ctx.job.metadata}")
-
-        # Check if metadata is a non-empty string before parsing
-        if ctx.job.metadata and isinstance(ctx.job.metadata, str):
-            logger.info(f"Metadata Type: {type(ctx.job.metadata)} | Raw: {ctx.job.metadata}")
+        if ctx.job.metadata and isinstance(ctx.job.metadata, str) and ctx.job.metadata.strip():
             metadata = json.loads(ctx.job.metadata)
+            logger.info(f"Parsed Metadata: {json.dumps(metadata, indent=4)}")
         else:
-            logger.warning(f"No metadata received or wrong type: {ctx.job.metadata}")
-    except json.JSONDecodeError as e:
-        logger.error("JSON Decode Error:", exc_info=True)
+            logger.warning(f"No metadata received or empty string: {ctx.job.metadata}")
     except Exception as e:
-        logger.error("Unexpected error while parsing metadata", exc_info=True)
-
-    logger.info(f"=== Step 3: Parsed Metadata === {json.dumps(metadata, indent=4)}")
-
-        # ===============================
-        # 3. Extract agentName with Multiple Checks
-        # ===============================
+        logger.error("Error parsing job metadata", exc_info=True)
+    
+    # --- Step 3: Extract agentName from metadata (with multiple checks) ---
     agent_name = (
         metadata.get("agentName") or
         metadata.get("agent_name") or
         "default-agent"
     )
     logger.info(f"Final extracted agentName: {agent_name} | Full Metadata Context: {json.dumps(metadata)} | Raw: {ctx.job.metadata}")
-
-    # ===============================
-    # 4. Greeting Messages Based on Agent Name
-    # ===============================
+    if agent_name == "default-agent":
+        logger.warning("No agentName found in metadata. Using default-agent.")
+    
+    # --- Step 4: Determine Greeting based on agentName ---
     logger.info("=== Step 4: Determine Greeting ===")
-
     if agent_name == "onboarding-agent":
         greeting = "Welcome! Let's begin your onboarding conversation."
     elif agent_name == "networking-agent":
@@ -72,12 +57,9 @@ async def entrypoint(ctx: JobContext):
         greeting = "Hey, what's up? Let's chat like native friends."
     else:
         greeting = "Hi! Are you ready to start the conversation?"
-
     logger.info(f"Selected Greeting: {greeting}")
-
-    # ===============================
-    # 5. Initial Conversation Context
-    # ===============================
+    
+    # --- Step 5: Build initial conversation context ---
     initial_ctx = llm.ChatContext().append(
         role="system",
         text=(
@@ -104,17 +86,16 @@ async def entrypoint(ctx: JobContext):
             "Once the scenario begins, all conversation must stay within the context of the scenario."
         ),
     )
-
+    
+    # --- Step 6: Connect to room ---
     logger.info(f"Connecting to room {ctx.room.name}")
     await ctx.connect(auto_subscribe=AutoSubscribe.AUDIO_ONLY)
-
-    # ===============================
-    # 6. Wait for Participant and Start Voice Assistant
-    # ===============================
+    
+    # --- Step 7: Wait for the first participant ---
     participant = await ctx.wait_for_participant()
     logger.info(f"Starting voice assistant for participant {participant.identity}")
-
-    # Initialize the voice assistant with the prewarmed VAD and the initial context.
+    
+    # --- Step 8: Start the voice assistant ---
     assistant = VoicePipelineAgent(
         vad=ctx.proc.userdata["vad"],
         stt=deepgram.STT(),
@@ -122,12 +103,9 @@ async def entrypoint(ctx: JobContext):
         tts=elevenlabs.TTS(),
         chat_ctx=initial_ctx,
     )
-
     assistant.start(ctx.room, participant)
-
-    # ===============================
-    # 7. Send the Greeting
-    # ===============================
+    
+    # --- Step 9: Send the greeting ---
     await assistant.say(greeting, allow_interruptions=False)
 
 
@@ -138,4 +116,3 @@ if __name__ == "__main__":
             prewarm_fnc=prewarm,
         ),
     )
-
