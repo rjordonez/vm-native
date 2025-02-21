@@ -191,7 +191,7 @@ async def entrypoint(ctx: JobContext):
 "Adjust topics/cue cards while keeping the examiner’s role strictly administrative! :dart:"
         )
     elif agent_type == "restauraunt-agent":
-        greeting = "Hey, what's up? Let's chat like native friends."
+        greeting = "Hey, what's up? Are you ready for the scenario?"
         initial_text = (
         "AI Agent Prompt: Waiter in a Restaurant"
 "Role and Purpose:"
