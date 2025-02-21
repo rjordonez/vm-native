@@ -31,10 +31,22 @@ async def entrypoint(ctx: JobContext):
     # ===============================
     metadata = {}
     try:
-        metadata = json.loads(ctx.job.metadata or "{}")
+        logger.info(f"Raw Metadata: {ctx.job.metadata}")
+        logger.info(f"Metadata Type: {type(ctx.job.metadata)}")
+
+        # Check if metadata is a string and attempt to parse
+        if isinstance(ctx.job.metadata, str):
+            metadata = json.loads(ctx.job.metadata)
+        else:
+            logger.warning("Metadata is not a string. Attempting to stringify and parse.")
+            metadata = json.loads(json.dumps(ctx.job.metadata))
+
         logger.info(f"Parsed Metadata: {json.dumps(metadata, indent=4)}")
+    except json.JSONDecodeError as json_err:
+        logger.error("JSON Decode Error:", exc_info=True)
     except Exception as e:
-        logger.error("Error parsing job metadata", exc_info=True)
+        logger.error("Unexpected Error parsing job metadata", exc_info=True)
+
 
     # ===============================
     # 3. Extract agentName with Multiple Checks
