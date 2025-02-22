@@ -7,8 +7,9 @@ from livekit.agents import (
     JobProcess,
     WorkerOptions,
     cli,
-    llm,
 )
+from livekit.plugins.openai import LLM
+
 from livekit.agents.pipeline import VoicePipelineAgent
 from livekit.plugins import openai, deepgram, silero, elevenlabs
 
@@ -269,7 +270,7 @@ async def entrypoint(ctx: JobContext):
     assistant = VoicePipelineAgent(
         vad=ctx.proc.userdata["vad"],
         stt=deepgram.STT(),
-        llm=openai.LLM(model="gpt-4o-mini"),
+        llm=LLM(model="gpt-4o-mini"),
         tts=elevenlabs.tts.Voice(
             id="cgSgspJ2msm6clMCkdW9",  # Use `voice_id` instead of `voice`,
             name="Jessica",
