@@ -8,7 +8,7 @@ from livekit.agents import (
     WorkerOptions,
     cli,
 )
-from livekit.plugins.openai import LLM
+from livekit.plugins.openai.openai_compat import LLM
 
 from livekit.agents.pipeline import VoicePipelineAgent
 from livekit.plugins import deepgram, silero, elevenlabs
