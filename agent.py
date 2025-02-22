@@ -360,11 +360,30 @@ async def entrypoint(ctx: JobContext):
     # Other great providers exist like Cerebras, ElevenLabs, Groq, Play.ht, Rime, and more
     # Learn more and pick the best one for your app:
     # https://docs.livekit.io/agents/plugins
+
+    eleven_tts=elevenlabs.tts.TTS(
+    model="eleven_turbo_v2_5",
+    voice=elevenlabs.tts.Voice(
+        id="EXAVITQu4vr4xnSDxMaL",
+        name="Bella",
+        category="premade",
+        settings=elevenlabs.tts.VoiceSettings(
+            stability=0.71,
+            similarity_boost=0.5,
+            style=0.0,
+            use_speaker_boost=True
+        ),
+    ),
+    language="en",
+    streaming_latency=3,
+    enable_ssml_parsing=False,
+    chunk_length_schedule=[80, 120, 200, 260],
+)
     agent = VoicePipelineAgent(
         vad=ctx.proc.userdata["vad"],
         stt=deepgram.STT(),
         llm=openai.LLM(model="gpt-4o-mini"),
-        tts=elevenlabs.TTS(),
+        tts=eleven_tts,
         turn_detector=turn_detector.EOUModel(),
         # minimum delay for endpointing, used when turn detector believes the user is done with their turn
         min_endpointing_delay=0.5,
