@@ -266,23 +266,23 @@ async def entrypoint(ctx: JobContext):
         text=initial_text
     )
     eleven_tts=elevenlabs.tts.TTS(
-            model="eleven_turbo_v2_5",
-            voice=elevenlabs.tts.Voice(
-                id="cgSgspJ2msm6clMCkdW9",  # Use `voice_id` instead of `voice`,
-                name="Jessica",
-                category="premade",
-                settings=elevenlabs.tts.VoiceSettings(
-                    stability=0.71,
-                    similarity_boost=0.5,
-                    style=0.0,
-                    use_speaker_boost=True
-                ),
+        model="eleven_turbo_v2_5",
+        voice=elevenlabs.tts.Voice(
+            id="EXAVITQu4vr4xnSDxMaL",
+            name="Bella",
+            category="premade",
+            settings=elevenlabs.tts.VoiceSettings(
+                stability=0.71,
+                similarity_boost=0.5,
+                style=0.0,
+                use_speaker_boost=True
             ),
-            language="en",
-            streaming_latency=3,
-            enable_ssml_parsing=False,
-            chunk_length_schedule=[80, 120, 200, 260],
-        )
+        ),
+        language="en",
+        streaming_latency=3,
+        enable_ssml_parsing=False,
+        chunk_length_schedule=[80, 120, 200, 260],
+    )   
 
     # Initialize the voice assistant
     assistant = VoicePipelineAgent(
