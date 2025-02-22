@@ -270,16 +270,9 @@ async def entrypoint(ctx: JobContext):
         vad=ctx.proc.userdata["vad"],
         stt=deepgram.STT(),
         llm=openai.LLM(model="gpt-4o-mini"),
-        assistant = VoicePipelineAgent(
-        vad=ctx.proc.userdata["vad"],
-        stt=deepgram.STT(),
-        llm=openai.LLM(model="gpt-4o-mini"),
         tts=elevenlabs.TTS(
             voice_id="cgSgspJ2msm6clMCkdW9"  # Use `voice_id` instead of `voice`
         ),
-        chat_ctx=initial_ctx,
-)
-
         chat_ctx=initial_ctx,
     )
 
