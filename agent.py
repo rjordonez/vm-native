@@ -271,7 +271,9 @@ async def entrypoint(ctx: JobContext):
         stt=deepgram.STT(),
         llm=openai.LLM(model="gpt-4o-mini"),
         tts=elevenlabs.tts.Voice(
-            id="cgSgspJ2msm6clMCkdW9"  # Use `voice_id` instead of `voice`
+            id="cgSgspJ2msm6clMCkdW9",  # Use `voice_id` instead of `voice`,
+            name="Jessica",
+            category="premade",
         ),
         chat_ctx=initial_ctx,
     )
