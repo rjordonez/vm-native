@@ -328,7 +328,7 @@ from livekit.agents import (
     metrics,
 )
 from livekit.agents.pipeline import VoicePipelineAgent
-from livekit.plugins import elevenlabs, openai, deepgram, silero, turn_detector
+from livekit.plugins import openai, deepgram, silero, turn_detector
 from livekit.plugins.elevenlabs import tts
 
 load_dotenv(dotenv_path=".env.local")
