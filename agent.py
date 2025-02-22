@@ -328,8 +328,8 @@ from livekit.agents import (
     metrics,
 )
 from livekit.agents.pipeline import VoicePipelineAgent
-from livekit.plugins import openai, deepgram, silero, turn_detector
-from livekit.plugins.elevenlabs import tts
+from livekit.plugins import elevenlabs, openai, deepgram, silero, turn_detector
+from livekit.plugins.elevenlabs import text
 
 load_dotenv(dotenv_path=".env.local")
 logger = logging.getLogger("voice-agent")
@@ -361,13 +361,13 @@ async def entrypoint(ctx: JobContext):
     # Learn more and pick the best one for your app:
     # https://docs.livekit.io/agents/plugins
 
-    eleven_tts=elevenlabs.tts.TTS(
+    eleven_tts=elevenlabs.text.TTS(
     model="eleven_turbo_v2_5",
-    voice=elevenlabs.tts.Voice(
+    voice=elevenlabs.text.Voice(
         id="EXAVITQu4vr4xnSDxMaL",
         name="Bella",
         category="premade",
-        settings=elevenlabs.tts.VoiceSettings(
+        settings=elevenlabs.text.VoiceSettings(
             stability=0.71,
             similarity_boost=0.5,
             style=0.0,
