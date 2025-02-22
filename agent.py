@@ -375,9 +375,7 @@ async def entrypoint(ctx: JobContext):
         ),
     ),
     language="en",
-    streaming_latency=3,
     enable_ssml_parsing=False,
-    chunk_length_schedule=[80, 120, 200, 260],
 )
     agent = VoicePipelineAgent(
         vad=ctx.proc.userdata["vad"],
