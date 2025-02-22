@@ -7,11 +7,11 @@ from livekit.agents import (
     JobProcess,
     WorkerOptions,
     cli,
+    llm
 )
-from livekit.plugins.openai.openai_compat import LLM
-
 from livekit.agents.pipeline import VoicePipelineAgent
-from livekit.plugins import deepgram, silero, elevenlabs
+from livekit.plugins import openai, deepgram, silero, elevenlabs
+
 
 load_dotenv(dotenv_path=".env.local")
 logger = logging.getLogger("voice-agent")
@@ -270,12 +270,15 @@ async def entrypoint(ctx: JobContext):
     assistant = VoicePipelineAgent(
         vad=ctx.proc.userdata["vad"],
         stt=deepgram.STT(),
-        llm=LLM(model="gpt-4o-mini"),
+        llm=openai.LLM(model="gpt-4o-mini"),
         tts=elevenlabs.tts.Voice(
             id="cgSgspJ2msm6clMCkdW9",  # Use `voice_id` instead of `voice`,
             name="Jessica",
             category="premade",
         ),
+        min_endpointing_delay=0.5,
+        # maximum delay for endpointing, used when turn detector does not believe the user is done with their turn
+        max_endpointing_delay=5.0,
         chat_ctx=initial_ctx,
     )
 
