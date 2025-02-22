@@ -11,7 +11,7 @@ from livekit.agents import (
 from livekit.plugins.openai import LLM
 
 from livekit.agents.pipeline import VoicePipelineAgent
-from livekit.plugins import openai, deepgram, silero, elevenlabs
+from livekit.plugins import deepgram, silero, elevenlabs
 
 load_dotenv(dotenv_path=".env.local")
 logger = logging.getLogger("voice-agent")
