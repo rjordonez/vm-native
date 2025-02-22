@@ -271,7 +271,6 @@ async def entrypoint(ctx: JobContext):
         stt=deepgram.STT(),
         llm=openai.LLM(model="gpt-4o-mini"),
         tts=elevenlabs.TTS(voice="Jessica"),  
-        tts=elevenlabs.TTS(),
         chat_ctx=initial_ctx,
     )
 
