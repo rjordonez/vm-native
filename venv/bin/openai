@@ -1,4 +1,4 @@
-#!/home/rexjordonez/my-app/venv/bin/python
+#!/Users/rexordonez/Desktop/livekit/vm_native/venv/bin/python3.13
 # -*- coding: utf-8 -*-
 import re
 import sys
