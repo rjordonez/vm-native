@@ -1,7 +1,203 @@
-livekit-agents>=0.12.11
-livekit-plugins-openai>=0.10.17
-livekit-plugins-cartesia>=0.4.7
-livekit-plugins-deepgram>=0.6.17
-livekit-plugins-silero>=0.7.4
-livekit-plugins-turn-detector>=0.4.0
-python-dotenv~=1.0
+absl-py==2.1.0
+aenum==3.1.15
+aiofiles==24.1.0
+aiohappyeyeballs==2.4.4
+aiohttp==3.11.11
+aiosignal==1.3.2
+annotated-types==0.7.0
+anyio==4.8.0
+archspec @ file:///home/conda/feedstock_root/build_artifacts/archspec_1737352602016/work
+assemblyai==0.37.0
+asyncio==3.4.3
+attrs==25.1.0
+audioread==3.0.1
+Automat==24.8.1
+av==14.1.0
+biopython==1.85
+blinker==1.9.0
+boltons @ file:///home/conda/feedstock_root/build_artifacts/boltons_1733827268945/work
+branca==0.8.1
+Brotli @ file:///Users/runner/miniforge3/conda-bld/brotli-split_1725267563793/work
+Cartopy==0.24.1
+certifi @ file:///home/conda/feedstock_root/build_artifacts/certifi_1734380492396/work/certifi
+cffi @ file:///Users/runner/miniforge3/conda-bld/cffi_1725560578465/work
+charset-normalizer @ file:///home/conda/feedstock_root/build_artifacts/charset-normalizer_1735929714516/work
+click==8.1.8
+colorama @ file:///home/conda/feedstock_root/build_artifacts/colorama_1733218098505/work
+coloredlogs==15.0.1
+conda @ file:///Users/runner/miniforge3/conda-bld/conda_1736460303265/work
+conda-libmamba-solver @ file:///home/conda/feedstock_root/build_artifacts/conda-libmamba-solver_1727359833193/work/src
+conda-package-handling @ file:///home/conda/feedstock_root/build_artifacts/conda-package-handling_1736345463896/work
+conda_package_streaming @ file:///home/conda/feedstock_root/build_artifacts/conda-package-streaming_1729004031731/work
+constantly==23.10.4
+contourpy==1.3.1
+cycler==0.12.1
+dataclasses-json==0.6.7
+decorator==5.1.1
+deepgram-sdk==3.10.0
+deprecation==2.1.0
+distro @ file:///home/conda/feedstock_root/build_artifacts/distro_1734729835256/work
+dotenv==0.9.9
+elevenlabs==1.52.0
+fastapi==0.115.8
+filelock==3.17.0
+fire==0.7.0
+Flask==3.1.0
+Flask-Cors==5.0.0
+flatbuffers==25.2.10
+folium==0.19.4
+fonttools==4.55.6
+frozendict @ file:///Users/runner/miniforge3/conda-bld/frozendict_1728841362247/work
+frozenlist==1.5.0
+fsspec==2024.12.0
+-e git+https://github.com/lowerquality/gentle.git@087a3b738bad9ebafd0570561486252cb624ba3a#egg=gentle
+gingerit==0.0.0.1
+grpcio==1.70.0
+grpclib==0.4.7
+h11==0.14.0
+h2 @ file:///home/conda/feedstock_root/build_artifacts/h2_1733298745555/work
+hpack @ file:///home/conda/feedstock_root/build_artifacts/hpack_1733299205993/work
+httpcore==1.0.7
+httpx==0.28.1
+huggingface-hub==0.27.1
+humanfriendly==10.0
+hyperframe @ file:///home/conda/feedstock_root/build_artifacts/hyperframe_1733298771451/work
+hyperlink==21.0.0
+idna @ file:///home/conda/feedstock_root/build_artifacts/idna_1733211830134/work
+incremental==24.7.2
+itsdangerous==2.2.0
+Jinja2==3.1.5
+jiter==0.8.2
+joblib==1.4.2
+jsonpatch @ file:///home/conda/feedstock_root/build_artifacts/jsonpatch_1733814567314/work
+jsonpointer @ file:///Users/runner/miniforge3/conda-bld/jsonpointer_1725302931775/work
+kiwisolver==1.4.8
+language_tool_python==2.9.0
+lazy_loader==0.4
+libmambapy @ file:///Users/runner/miniforge3/conda-bld/mamba-split_1735835787728/work/libmambapy
+librosa==0.10.2.post1
+livekit==0.20.3
+livekit-agents==0.12.15
+livekit-api==0.8.2
+livekit-plugins-cartesia==0.4.7
+livekit-plugins-deepgram @ git+https://github.com/livekit/agents.git@c6291d513527a1fdc34c20b4e5cb4be14d387333#subdirectory=livekit-plugins/livekit-plugins-deepgram
+livekit-plugins-elevenlabs==0.7.13
+livekit-plugins-openai==0.10.17
+livekit-plugins-silero==0.7.4
+livekit-plugins-turn-detector==0.4.2
+livekit-protocol==0.9.0
+llvmlite==0.44.0
+mamba @ file:///Users/runner/miniforge3/conda-bld/mamba-split_1735835787728/work/mamba
+Markdown==3.7
+markdown-it-py==3.0.0
+MarkupSafe==3.0.2
+marshmallow==3.26.1
+matplotlib==3.10.0
+mdurl==0.1.2
+menuinst @ file:///Users/runner/miniforge3/conda-bld/menuinst_1731147022576/work
+modal==0.73.7
+more-itertools==10.6.0
+MouseInfo==0.1.3
+mpmath==1.3.0
+msgpack==1.1.0
+multidict==6.1.0
+mypy-extensions==1.0.0
+networkx==3.4.2
+nltk==3.9.1
+numba==0.61.0
+numpy==1.26.4
+onnxruntime==1.20.1
+openai==1.64.0
+openai-whisper==20240930
+opencv-python==4.10.0.84
+packaging @ file:///home/conda/feedstock_root/build_artifacts/packaging_1733203243479/work
+pandas==2.2.3
+pillow==11.1.0
+platformdirs @ file:///home/conda/feedstock_root/build_artifacts/platformdirs_1733232627818/work
+pluggy @ file:///home/conda/feedstock_root/build_artifacts/pluggy_1733222765875/work
+pooch==1.8.2
+praatio==6.2.0
+propcache==0.2.1
+protobuf==5.29.3
+psutil==5.9.8
+PyAutoGUI==0.9.54
+pybboxes==0.1.6
+pycosat @ file:///Users/runner/miniforge3/conda-bld/pycosat_1732588505673/work
+pycparser @ file:///home/conda/feedstock_root/build_artifacts/bld/rattler-build_pycparser_1733195786/work
+pydantic==2.10.6
+pydantic_core==2.27.2
+PyGetWindow==0.0.9
+Pygments==2.19.1
+PyJWT==2.10.1
+PyMsgBox==1.0.9
+pyobjc-core==11.0
+pyobjc-framework-Cocoa==11.0
+pyobjc-framework-Quartz==11.0
+pyparsing==3.2.1
+pyperclip==1.9.0
+pyproj==3.7.0
+PyRect==0.2.0
+PyScreeze==1.0.1
+pyshp==2.3.1
+PySocks @ file:///home/conda/feedstock_root/build_artifacts/pysocks_1733217236728/work
+python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
+pytweening==1.2.0
+pytz==2024.2
+PyYAML==6.0.2
+regex==2024.11.6
+requests @ file:///home/conda/feedstock_root/build_artifacts/requests_1733217035951/work
+rich==13.9.4
+ruamel.yaml @ file:///Users/runner/miniforge3/conda-bld/ruamel.yaml_1736248058782/work
+ruamel.yaml.clib @ file:///Users/runner/miniforge3/conda-bld/ruamel.yaml.clib_1728724504988/work
+rubicon-objc==0.5.0
+safetensors==0.5.2
+sahi==0.11.20
+scikit-learn==1.6.1
+scipy==1.15.1
+seaborn==0.13.2
+sentry-sdk==2.20.0
+setuptools==75.8.0
+shapely==2.0.6
+shellingham==1.5.4
+sigtools==4.0.1
+six==1.17.0
+sniffio==1.3.1
+soundfile==0.13.0
+soxr==0.5.0.post1
+starlette==0.45.3
+sympy==1.13.1
+synchronicity==0.9.10
+tensorboard==2.18.0
+tensorboard-data-server==0.7.2
+termcolor==2.5.0
+terminaltables==3.1.10
+thop==0.1.1.post2209072238
+threadpoolctl==3.5.0
+tiktoken==0.8.0
+tokenizers==0.21.0
+toml==0.10.2
+torch==2.5.1
+torchvision==0.20.1
+tqdm @ file:///home/conda/feedstock_root/build_artifacts/tqdm_1735661334605/work
+transformers==4.48.1
+truststore @ file:///home/conda/feedstock_root/build_artifacts/truststore_1729762363021/work
+Twisted==24.11.0
+typer==0.15.1
+types-certifi==2021.10.8.3
+types-protobuf==4.25.0.20240417
+types-toml==0.10.8.20240310
+typing-inspect==0.9.0
+typing_extensions==4.12.2
+tzdata==2025.1
+ultralytics==8.0.43
+ultralyticsplus==0.0.28
+urllib3 @ file:///home/conda/feedstock_root/build_artifacts/urllib3_1734859416348/work
+watchfiles==0.24.0
+websockets==14.2
+Werkzeug==3.1.3
+wheel==0.45.1
+xyzservices==2025.1.0
+yarl==1.18.3
+zope.interface==7.2
+zstandard==0.23.0
