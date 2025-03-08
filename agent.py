@@ -131,7 +131,7 @@ async def entrypoint(ctx: JobContext):
         initial_text = (
             f"You are {agent_who}. The conversation is taking place in {agent_where}. "
             f"Your attitude is {agent_attitude}. Respond to the user in a way that maintains this role and setting throughout the conversation. "
-            "Keep your responses concise and natural in one sentence. Be conversational. "
+            "Keep your responses concise and natural in one sentence."
         )
 
     elif agent_type == "ielts-agent":
