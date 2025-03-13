@@ -127,7 +127,7 @@ async def entrypoint(ctx: JobContext):
 
     # Greet user based on agent type
     if agent_type == "all-purpose-agent":
-        greeting = "Hi, Are you ready to start?"
+        greeting = "Whats your name?"
         initial_text = (
             f"You are {agent_who}. The conversation is taking place in {agent_where}. "
             f"Your attitude is {agent_attitude}. Respond to the user in a way that maintains this role and setting throughout the conversation. "
